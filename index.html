@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Notes</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Notesh </h1>
+
+    <div class="note-box">
+        <textarea id="noteInput" placeholder="Tulis catatan..."></textarea>
+
+        <button onclick="addNote()">
+            Tambah
+        </button>
+    </div>
+
+    <div class="notes" id="notesContainer"></div>
+
+</div>
+
+<script>
+const notesContainer =
+document.getElementById("notesContainer");
+
+const noteInput =
+document.getElementById("noteInput");
+
+window.onload = function(){
+    showNotes();
+};
+
+function addNote(){
+
+    const noteText =
+    noteInput.value.trim();
+
+    if(noteText === ""){
+        alert("Isi catatan dulu!");
+        return;
+    }
+
+    let notes =
+    JSON.parse(localStorage.getItem("notes")) || [];
+
+    notes.push(noteText);
+
+    localStorage.setItem(
+        "notes",
+        JSON.stringify(notes)
+    );
+
+    noteInput.value = "";
+
+    showNotes();
+}
+
+function showNotes(){
+
+    let notes =
+    JSON.parse(localStorage.getItem("notes")) || [];
+
+    notesContainer.innerHTML = "";
+
+    notes.forEach((note,index)=>{
+
+        notesContainer.innerHTML += `
+        <div class="note">
+
+            <button
+            class="delete-btn"
+            onclick="deleteNote(${index})">
+            Hapus
+            </button>
+
+            <p>${note}</p>
+
+        </div>
+        `;
+    });
+}
+
+function deleteNote(index){
+
+    let notes =
+    JSON.parse(localStorage.getItem("notes")) || [];
+
+    notes.splice(index,1);
+
+    localStorage.setItem(
+        "notes",
+        JSON.stringify(notes)
+    );
+
+    showNotes();
+}
+</script>
+
+</body>
+</html>
