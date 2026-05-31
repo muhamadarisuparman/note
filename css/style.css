@@ -67,8 +67,7 @@ button:hover{
     background:#1e293b;
     padding:20px;
     border-radius:15px;
-    position:relative;
-    word-wrap:break-word;
+
 }
 
 .delete-btn{
@@ -89,11 +88,10 @@ button:hover{
 }
 
 .action-buttons{
-    position:absolute;
-    top:10px;
-    right:10px;
     display:flex;
-    gap:5px;
+    gap:8px;
+    margin-bottom:10px;
+    justify-content:flex-end;
 }
 
 .edit-btn{
@@ -108,4 +106,26 @@ button:hover{
     padding:7px 12px;
     border-radius:10px;
     font-size:14px;
+}
+
+@media (max-width: 600px){
+
+    .note-box{
+        flex-direction:column;
+    }
+
+    .note-box button{
+        width:100%;
+    }
+
+    .action-buttons{
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .edit-btn,
+    .delete-btn{
+        width:100px;
+    }
+
 }
