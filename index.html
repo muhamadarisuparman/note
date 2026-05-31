@@ -43,18 +43,30 @@ window.onload = function(){
 
 function addNote(){
 
-    const noteText =
-    noteInput.value.trim();
+    const noteText = noteInput.value.trim();
 
     if(noteText === ""){
         alert("Isi catatan dulu!");
         return;
     }
 
+    const now = new Date();
+
+    const date = now.toLocaleString("id-ID",{
+        day:"2-digit",
+        month:"long",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+    });
+
     let notes =
     JSON.parse(localStorage.getItem("notes")) || [];
 
-    notes.push(noteText);
+    notes.push({
+        text: noteText,
+        date: date
+    });
 
     localStorage.setItem(
         "notes",
@@ -84,7 +96,11 @@ function showNotes(){
             Hapus
             </button>
 
-            <p>${note}</p>
+            <small class="note-date">
+                ${note.date}
+            </small>
+
+            <p>${note.text}</p>
 
         </div>
         `;
