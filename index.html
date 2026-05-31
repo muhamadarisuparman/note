@@ -90,11 +90,21 @@ function showNotes(){
         notesContainer.innerHTML += `
         <div class="note">
 
-            <button
-            class="delete-btn"
-            onclick="deleteNote(${index})">
-            Hapus
-            </button>
+            <div class="action-buttons">
+
+    <button
+    class="edit-btn"
+    onclick="editNote(${index})">
+    Edit
+    </button>
+
+    <button
+    class="delete-btn"
+    onclick="deleteNote(${index})">
+    Hapus
+    </button>
+
+</div>
 
             <small class="note-date">
                 ${note.date}
@@ -113,6 +123,41 @@ function deleteNote(index){
     JSON.parse(localStorage.getItem("notes")) || [];
 
     notes.splice(index,1);
+
+    localStorage.setItem(
+        "notes",
+        JSON.stringify(notes)
+    );
+
+    showNotes();
+}
+
+function editNote(index){
+
+    let notes =
+    JSON.parse(localStorage.getItem("notes")) || [];
+
+    const newText = prompt(
+        "Edit catatan:",
+        notes[index].text
+    );
+
+    if(newText === null || newText.trim() === ""){
+        return;
+    }
+
+    notes[index].text = newText;
+
+    const now = new Date();
+
+    notes[index].date =
+    now.toLocaleString("id-ID",{
+        day:"2-digit",
+        month:"long",
+        year:"numeric",
+        hour:"2-digit",
+        minute:"2-digit"
+    });
 
     localStorage.setItem(
         "notes",
